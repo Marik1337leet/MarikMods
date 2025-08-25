@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Новый товар</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+</head>
+<body class="container">
+  <h1>Добавить товар</h1>
+  <form action="/products/create" method="post" enctype="multipart/form-data">
+    <label>Название <input name="title" required></label>
+    <label>Описание <textarea name="description"></textarea></label>
+    <label>Цена в звёздах (XTR) <input name="price_stars" type="number" min="1" required value="100"></label>
+    <label>Цена в USD (CryptoCloud) <input name="price_usd" type="number" step="0.01" min="0.5" required value="1.99"></label>
+    <label>Файл мода (.zip/.rar/.oiv) <input name="file" type="file" required></label>
+    <button type="submit">Сохранить</button>
+  </form>
+  <p><a href="/">← Назад</a></p>
+</body>
+</html>

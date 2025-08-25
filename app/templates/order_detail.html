@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Заказ #{{order.id}}</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+</head>
+<body class="container">
+  <h1>Заказ #{{order.id}}</h1>
+  <p>Покупатель: {{order.username}} ({{order.user_id}})</p>
+  <p>Товар: {{order.product.title}}</p>
+  <p>Метод оплаты: {{order.payment_method}}</p>
+  <p>Статус: {{order.status}}</p>
+  <p>External ID: {{order.external_id}}</p>
+  <p>Invoice link: <a href="{{order.invoice_link}}" target="_blank">{{order.invoice_link}}</a></p>
+  <p><a href="/">← Назад</a></p>
+</body>
+</html>

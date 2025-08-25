@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>GTA5 Mod Shop — Admin</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <style> .grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;} </style>
+</head>
+<body class="container">
+  <h1>GTA5 Mod Shop — Admin</h1>
+  <details open>
+    <summary>Настройки</summary>
+    <ul>
+      <li>ENABLE_STARS: {{ 'ON' if settings.ENABLE_STARS else 'OFF' }}</li>
+      <li>ENABLE_CRYPTOCLOUD: {{ 'ON' if settings.ENABLE_CRYPTOCLOUD else 'OFF' }}</li>
+      <li>PUBLIC_BASE_URL: {{ settings.PUBLIC_BASE_URL }}</li>
+    </ul>
+  </details>
+
+  <h2>Товары</h2>
+  <p><a href="/products/new">+ Добавить товар</a></p>
+  <div>
+    {% for p in products %}
+      <article>
+        <header><strong>{{p.title}}</strong></header>
+        <p>{{p.description}}</p>
+        <p>Цена: {{p.price_stars}} ⭐ (XTR) • ${{"%.2f"%p.price_usd}} (CryptoCloud)</p>
+        <small>Файл: {{p.file_path}}</small>
+      </article>
+    {% else %}
+      <p>Нет товаров.</p>
+    {% endfor %}
+  </div>
+
+  <h2>Последние заказы</h2>
+  <div>
+    {% for o in orders %}
+      <article>
+        <header>#{{o.id}} — {{o.product.title}} — {{o.status}}</header>
+        <p>{{o.payment_method}} • {{o.username}} ({{o.user_id}})</p>
+        <a href="/orders/{{o.id}}">Открыть</a>
+      </article>
+    {% else %}
+      <p>Нет заказов.</p>
+    {% endfor %}
+  </div>
+</body>
+</html>
