@@ -1,32 +1,23 @@
-import asyncio
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
+from telegram.ext import Application
+import asyncio
 
-from app.admin import app as admin_app
-from app.payments.cryptocloud import router as cc_router
-from app.bot import build_application
+root = FastAPI()
 
-root = FastAPI(title="GTA5 Mod Shop")
-root.include_router(cc_router)
-root.mount("/", admin_app)
+# создаём приложение Telegram бота
+telegram_app = Application.builder().token("YOUR_TELEGRAM_BOT_TOKEN").build()
 
-root.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-bot_app = build_application()
-
-
+# Lifespan вместо on_event
 @root.on_event("startup")
-async def _run_bot():
-    await bot_app.initialize()
-    asyncio.create_task(bot_app.start())
-
+async def startup():
+    print("Запуск бота...")
+    asyncio.create_task(telegram_app.run_polling())
 
 @root.on_event("shutdown")
-async def _stop_bot():
-    await bot_app.stop()
-    await bot_app.shutdown()
+async def shutdown():
+    print("Остановка бота...")
+    await telegram_app.shutdown()
+
+@root.get("/")
+async def home():
+    return {"status": "ok", "message": "FastAPI + Telegram bot работает 🚀"}
