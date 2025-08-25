@@ -2,6 +2,11 @@ from threading import Thread
 import uvicorn
 from app.bot import start_bot
 from app.admin import app as fastapi_app
+from app.admin import app as admin_app
+from app.payments.cryptocloud import router as cc_router
+from app.config import settings
+from app.bot import build_application
+
 
 if __name__ == "__main__":
     # Запуск бота в отдельном потоке
