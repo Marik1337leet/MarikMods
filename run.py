@@ -11,7 +11,9 @@ telegram_app = Application.builder().token("YOUR_TELEGRAM_BOT_TOKEN").build()
 @root.on_event("startup")
 async def startup():
     print("Запуск бота...")
-    asyncio.create_task(telegram_app.run_polling())
+    asyncio.create_task(telegram_app.initialize())
+    asyncio.create_task(telegram_app.start())
+    asyncio.create_task(telegram_app.updater.start_polling())
 
 @root.on_event("shutdown")
 async def shutdown():
