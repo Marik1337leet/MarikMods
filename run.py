@@ -25,11 +25,15 @@ async def _run_bot():
     await bot_app.initialize()
     asyncio.create_task(bot_app.start())
 
+
 @root.on_event("shutdown")
 async def _stop_bot():
     await bot_app.stop()
     await bot_app.shutdown()
 
+
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("run:root", host="0.0.0.0", port=8000, reload=True)
+    import os
+    port = int(os.environ.get("PORT", 8000))  # Railway задаёт порт в переменной окружения
+    uvicorn.run(root, host="0.0.0.0", port=port)
