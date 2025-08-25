@@ -26,10 +26,11 @@ async def _run_bot():
     asyncio.create_task(bot_app.start())
 
 
-@root.on_event("shutdown")
-async def _stop_bot():
-    await bot_app.stop()
-    await bot_app.shutdown()
+@root.on_event("startup")
+async def _run_bot():
+    loop = asyncio.get_event_loop()
+    loop.create_task(bot_app.initialize())
+    loop.create_task(bot_app.start())
 
 
 if __name__ == "__main__":
